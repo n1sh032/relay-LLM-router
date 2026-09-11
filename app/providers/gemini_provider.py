@@ -1,39 +1,35 @@
 import os
-import google.generativeai as genai
+from google import genai
 from app.providers.base import Provider, ChatRequest, ChatResponse
 
-# gemini needs to be configured globally with the key first
-# before you can even create a model object, kinda annoying
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+# new sdk uses a client object instead of the old configure() global setup
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 
 class GeminiProvider(Provider):
 
     async def chat(self, request: ChatRequest) -> ChatResponse:
-        model = genai.GenerativeModel(request.model)
-
-        # gemini doesnt use "assistant" as a role, it wants "model" instead
-        # so gotta remap that or it just errors out (learned this the hard way)
+        # gemini doesnt use "assistant" as a role like openai does
+        # it wants "model" instead, learned this the hard way earlier
         gemini_messages = []
         for m in request.messages:
             role = "model" if m.role == "assistant" else m.role
-            gemini_messages.append({"role": role, "parts": [m.content]})
+            gemini_messages.append({"role": role, "parts": [{"text": m.content}]})
 
-        response = await model.generate_content_async(
-            gemini_messages,
-            generation_config={
+        response = await client.aio.models.generate_content(
+            model=request.model,
+            contents=gemini_messages,
+            config={
                 "max_output_tokens": request.max_tokens,
                 "temperature": request.temperature,
             },
         )
 
-        # gemini gives token counts in a different spot than openai does
-        usage = response.usage_metadata
-
+        # plating gemini's response onto our standard shape
         return ChatResponse(
             content=response.text,
             provider="gemini",
             model=request.model,
-            input_tokens=usage.prompt_token_count,
-            output_tokens=usage.candidates_token_count,
+            input_tokens=response.usage_metadata.prompt_token_count,
+            output_tokens=response.usage_metadata.candidates_token_count,
         )
