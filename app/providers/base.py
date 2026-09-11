@@ -13,7 +13,8 @@ class ChatMessage(BaseModel):
 class ChatRequest(BaseModel):
     # this is what comes IN to my api
     messages: list[ChatMessage]
-    model: str
+    quality: str = "fast"   # "fast" or "smart" for now, keeping it simple
+    model: str | None = None   # gets filled in by the router, caller doesnt need to set this
     max_tokens: int | None = None
     temperature: float | None = None
 
