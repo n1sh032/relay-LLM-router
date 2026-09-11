@@ -1,16 +1,11 @@
+from openai import APIError as OpenAIAPIError
+from google.genai.errors import APIError as GeminiAPIError
 from app.providers.base import Provider, ChatRequest, ChatResponse
 
-# just a rough list for now of which errors mean "try someone else"
-# vs which ones mean "this is genuinely broken, dont bother retrying"
-# gonna refine this as i learn more about what each sdk actually throws
 
 class AllProvidersFailedError(Exception):
-    # raised when literally every provider in the list failed
     pass
 
-
-# maps a quality level to (which provider to try first, which model to use)
-# ordered by preference - first one in each list is tried first
 
 MODEL_MAP = {
     "fast": [
@@ -23,11 +18,14 @@ MODEL_MAP = {
     ],
 }
 
+# only these count as "provider failed, try the next one"
+# anything else (like a bug in my own code) should crash loudly instead
+PROVIDER_ERRORS = (OpenAIAPIError, GeminiAPIError)
+
 
 class Router:
 
     def __init__(self, providers: dict[str, Provider]):
-        # dict this time so i can look up "openai" -> its provider object
         self.providers = providers
 
     async def chat(self, request: ChatRequest) -> ChatResponse:
@@ -37,20 +35,17 @@ class Router:
 
         for provider_name, model_name in options:
             provider = self.providers[provider_name]
-
-            # each provider gets told exactly which model to use for THIS
-            # attempt instead of relying on whatever the caller sent
             provider_request = request.model_copy(update={"model": model_name})
 
             try:
                 return await provider.chat(provider_request)
-            except Exception as e:
-                # for now just catching everything and moving to the next
-                # provider. will make this smarter later - some errors
-                # shouldnt even trigger a fallback (like a bad request)
+            except PROVIDER_ERRORS as e:
+                # actual provider failure - openai/gemini rejected us,
+                # network issue, etc - fine to fall back
                 print(f"{provider_name} failed: {e}")
                 last_error = e
                 continue
+            # anything NOT in PROVIDER_ERRORS (bugs, typos, etc)
+            # will crash normally instead of being hidden here
 
-        # if we get here, literally nothing worked
         raise AllProvidersFailedError(f"all providers failed, last error: {last_error}")
