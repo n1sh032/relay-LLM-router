@@ -1,6 +1,10 @@
+import json
+import logging
 from openai import APIError as OpenAIAPIError
 from google.genai.errors import APIError as GeminiAPIError
-from app.providers.base import Provider, ChatRequest, ChatResponse
+from app.providers.base import Provider, ChatRequest, ChatResponse, IncompleteResponseError
+
+logger = logging.getLogger(__name__)
 
 
 class AllProvidersFailedError(Exception):
@@ -21,7 +25,7 @@ MODEL_MAP = {
 }
 
 # only fall back for actual provider errors, not bugs in my own code
-PROVIDER_ERRORS = (OpenAIAPIError, GeminiAPIError)
+PROVIDER_ERRORS = (OpenAIAPIError, GeminiAPIError, IncompleteResponseError)
 
 
 class Router:
@@ -30,18 +34,21 @@ class Router:
 
     async def chat(self, request: ChatRequest) -> ChatResponse:
         options = MODEL_MAP.get(request.quality, MODEL_MAP["fast"])
-        last_error = None
 
         for provider_name, model_name in options:
-            provider = self.providers[provider_name]
+            provider = self.providers.get(provider_name)
+            if provider is None:
+                continue
             provider_request = request.model_copy(update={"model": model_name})
 
             try:
                 return await provider.chat(provider_request)
             except PROVIDER_ERRORS as e:
-                print(f"{provider_name} failed: {e}")
-                last_error = e
-                continue
+                logger.warning(json.dumps({
+                    "event": "provider_failed", "provider": provider_name,
+                    "model": model_name, "error_type": type(e).__name__,
+                    "status": getattr(e, "status_code", getattr(e, "code", None)),
+                }))
             # anything else isnt caught here on purpose, i want real bugs to crash
 
-        raise AllProvidersFailedError(f"all providers failed. last error: {last_error}")
+        raise AllProvidersFailedError()
