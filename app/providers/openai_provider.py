@@ -1,13 +1,13 @@
 import os
 from openai import AsyncOpenAI
-from app.providers.base import Provider, ChatRequest, ChatResponse, IncompleteResponseError
+from app.providers.base import Provider, ProviderRequest, ChatResponse, IncompleteResponseError
 
 
 class OpenAIProvider(Provider):
     def __init__(self):
-        self.client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"), max_retries=0)
+        self.client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"), max_retries=0, timeout=30)
 
-    async def chat(self, request: ChatRequest) -> ChatResponse:
+    async def chat(self, request: ProviderRequest) -> ChatResponse:
         # openai wants plain dicts not pydantic objects
         openai_messages = [{"role": m.role, "content": m.content} for m in request.messages]
 
@@ -30,4 +30,5 @@ class OpenAIProvider(Provider):
             model=getattr(response, "model", None) or request.model,
             input_tokens=getattr(usage, "prompt_tokens", None),
             output_tokens=getattr(usage, "completion_tokens", None),
+            finish_reason=getattr(choices[0], "finish_reason", None),
         )

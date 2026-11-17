@@ -15,7 +15,6 @@ class ChatRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
     messages: list[ChatMessage] = Field(min_length=1, max_length=64)
     quality: Literal["fast", "smart"] = "fast"
-    model: str | None = None  # router fills this in, dont need to set it yourself
     max_tokens: int | None = Field(None, ge=1, le=8192, strict=True)
     temperature: float | None = Field(None, ge=0, le=2, strict=True)
 
@@ -29,9 +28,11 @@ class ChatRequest(BaseModel):
             raise ValueError("at least one user message is required")
         if any(m.role == "system" for m in self.messages[1:]):
             raise ValueError("a system message is only allowed at the start")
-        if self.model is not None:
-            raise ValueError("choose a quality tier instead of specifying a model")
         return self
+
+
+class ProviderRequest(ChatRequest):
+    model: str
 
 class ChatResponse(BaseModel):
     content: str
@@ -39,6 +40,7 @@ class ChatResponse(BaseModel):
     model: str
     input_tokens: int | None
     output_tokens: int | None
+    finish_reason: str | None = None
 
 
 class IncompleteResponseError(Exception):
@@ -49,7 +51,7 @@ class Provider(ABC):
     # keeps everything consistent so the router doesnt care who its talking to
 
     @abstractmethod
-    async def chat(self, request: ChatRequest) -> ChatResponse:
+    async def chat(self, request: ProviderRequest) -> ChatResponse:
         pass
 
     # TODO: add health_check() later maybe, so i can ping providers

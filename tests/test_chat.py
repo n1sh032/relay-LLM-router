@@ -30,6 +30,11 @@ def test_invalid_request(change):
     assert post(request | change).status_code == 422
 
 
+def test_request_body_size_is_limited():
+    request = {"messages": [{"role": "user", "content": "x" * (512 * 1024)}]}
+    assert post(request).status_code == 413
+
+
 def test_fallback_and_errors(monkeypatch):
     class Empty:
         async def chat(self, request):

@@ -1,8 +1,9 @@
+import asyncio
 import json
 import logging
 from openai import APIError as OpenAIAPIError
 from google.genai.errors import APIError as GeminiAPIError
-from app.providers.base import Provider, ChatRequest, ChatResponse, IncompleteResponseError
+from app.providers.base import Provider, ChatRequest, ChatResponse, IncompleteResponseError, ProviderRequest
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +26,7 @@ MODEL_MAP = {
 }
 
 # only fall back for actual provider errors, not bugs in my own code
-PROVIDER_ERRORS = (OpenAIAPIError, GeminiAPIError, IncompleteResponseError)
+PROVIDER_ERRORS = (OpenAIAPIError, GeminiAPIError, IncompleteResponseError, TimeoutError)
 
 
 class Router:
@@ -39,10 +40,10 @@ class Router:
             provider = self.providers.get(provider_name)
             if provider is None:
                 continue
-            provider_request = request.model_copy(update={"model": model_name})
+            provider_request = ProviderRequest(**request.model_dump(), model=model_name)
 
             try:
-                return await provider.chat(provider_request)
+                return await asyncio.wait_for(provider.chat(provider_request), timeout=30)
             except PROVIDER_ERRORS as e:
                 logger.warning(json.dumps({
                     "event": "provider_failed", "provider": provider_name,
