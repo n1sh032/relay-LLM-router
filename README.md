@@ -52,3 +52,12 @@ The route and adapter suite passed **9 tests**. It covers invalid requests, body
 .\.venv\Scripts\python.exe -m pip install pytest httpx
 .\.venv\Scripts\python.exe -m pytest -q
 ```
+
+## Application lifecycle
+
+Provider composition and cleanup live in `app/application.py`.
+`GET /health` reports whether providers are configured. FastAPI closes provider
+clients during application shutdown. Start on port 8013 to use
+[Relay API docs](http://relay.localhost:8013/docs) alongside the other local apps.
+
+See [architecture and development](docs/ARCHITECTURE.md).

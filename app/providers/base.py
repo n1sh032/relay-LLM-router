@@ -47,6 +47,9 @@ class IncompleteResponseError(Exception):
     pass
 
 class Provider(ABC):
+    async def close(self):
+        """Release provider resources when the API shuts down."""
+
     # every provider (openai, gemini etc) has to implement this
     # keeps everything consistent so the router doesnt care who its talking to
 
