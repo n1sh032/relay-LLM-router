@@ -16,3 +16,9 @@ class OpenAIProvider(Provider):
             {"role": m.role, "content": m.content} for m in request.messages
         ]
 
+        response = await self.client.chat.completions.create(
+            model=request.model,
+            messages=openai_messages,
+            max_tokens=request.max_tokens,
+            temperature=request.temperature,
+        )
