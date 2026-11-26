@@ -4,7 +4,6 @@ from app.providers.base import Provider, ChatRequest, ChatResponse
 
 
 class OpenAIProvider(Provider):
-
     def __init__(self):
         # grabs the key from env vars, never hardcode this stuff
         self.client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
