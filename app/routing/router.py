@@ -51,4 +51,4 @@ class Router:
                 }))
             # anything else isnt caught here on purpose, i want real bugs to crash
 
-        raise AllProvidersFailedError(f"all providers failed. last error: {last_error}")
+        raise AllProvidersFailedError()
