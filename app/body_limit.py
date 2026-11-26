@@ -19,3 +19,6 @@ class ChatBodyLimit:
             if len(body) + len(chunk) > self.max_bytes:
                 response = JSONResponse({"detail": {"code": "request_too_large"}}, status_code=413)
                 return await response(scope, receive, send)
+            body.extend(chunk)
+            if not message.get("more_body", False):
+                break
