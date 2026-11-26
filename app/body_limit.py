@@ -25,3 +25,9 @@ class ChatBodyLimit:
 
         delivered = False
 
+        async def replay():
+            nonlocal delivered
+            if delivered:
+                return await receive()
+            delivered = True
+            return {"type": "http.request", "body": bytes(body), "more_body": False}
