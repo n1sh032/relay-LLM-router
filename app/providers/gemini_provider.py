@@ -9,7 +9,7 @@ class GeminiProvider(Provider):
             api_key=os.getenv("GEMINI_API_KEY"), http_options={"timeout": 30000},
         )
 
-    async def chat(self, request: ChatRequest) -> ChatResponse:
+    async def chat(self, request: ProviderRequest) -> ChatResponse:
         # gemini uses "model" instead of "assistant" for role, annoying
         # spent way too long debugging this before i realised
         gemini_messages = []
