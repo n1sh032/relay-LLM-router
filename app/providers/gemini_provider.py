@@ -7,6 +7,7 @@ class GeminiProvider(Provider):
     async def close(self):
         await self.client.aio.aclose()
         self.client.close()
+
     def __init__(self):
         self.client = genai.Client(
             api_key=os.getenv("GEMINI_API_KEY"), http_options={"timeout": 30000},
