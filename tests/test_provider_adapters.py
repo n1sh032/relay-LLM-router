@@ -37,3 +37,6 @@ def test_openai_preserves_length_finish_reason_and_missing_usage():
 
 def test_gemini_sends_system_message_separately():
     generate = AsyncMock(return_value=NS(text="Hello", candidates=[NS(finish_reason="MAX_TOKENS")]))
+    provider = GeminiProvider.__new__(GeminiProvider)
+    provider.client = NS(aio=NS(models=NS(generate_content=generate)))
+    response = asyncio.run(provider.chat(request()))
