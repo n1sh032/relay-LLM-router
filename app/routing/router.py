@@ -43,7 +43,7 @@ class Router:
             provider_request = ProviderRequest(**request.model_dump(), model=model_name)
 
             try:
-                return await provider.chat(provider_request)
+                return await asyncio.wait_for(provider.chat(provider_request), timeout=30)
             except PROVIDER_ERRORS as e:
                 logger.warning(json.dumps({
                     "event": "provider_failed", "provider": provider_name,
