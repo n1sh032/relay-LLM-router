@@ -41,6 +41,9 @@ class ChatResponse(BaseModel):
     output_tokens: int | None
 
 
+class IncompleteResponseError(Exception):
+    pass
+
 class Provider(ABC):
     # every provider (openai, gemini etc) has to implement this
     # keeps everything consistent so the router doesnt care who its talking to
