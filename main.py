@@ -9,7 +9,7 @@ from fastapi import FastAPI, HTTPException
 from app.providers.base import ChatRequest, ChatResponse
 from app.providers.openai_provider import OpenAIProvider
 from app.providers.gemini_provider import GeminiProvider
-from app.routing.router import Router
+from app.routing.router import AllProvidersFailedError, Router
 
 app = FastAPI()
 
