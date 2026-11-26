@@ -7,3 +7,9 @@ from app.providers.base import Provider, ChatRequest, ChatResponse
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 
+class GeminiProvider(Provider):
+
+    async def chat(self, request: ChatRequest) -> ChatResponse:
+        model = genai.GenerativeModel(request.model)
+
+        # gemini doesnt use "assistant" as a role, it wants "model" instead
