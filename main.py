@@ -14,10 +14,24 @@ from app.routing.router import AllProvidersFailedError, Router
 app = FastAPI()
 
 # openai first, gemini as backup if it fails
-router = Router({
-    "openai": OpenAIProvider(),
-    "gemini": GeminiProvider(),
-})
+def configure_router():
+    providers = {}
+    for name, key, factory in (
+        ("openai", "OPENAI_API_KEY", OpenAIProvider),
+        ("gemini", "GEMINI_API_KEY", GeminiProvider),
+    ):
+        reason = "missing_api_key"
+        if os.getenv(key, "").strip():
+            try:
+                providers[name] = factory()
+                continue
+            except Exception as exc:
+                reason = type(exc).__name__
+        logging.getLogger(__name__).warning(json.dumps({
+            "event": "provider_unavailable", "provider": name,
+            "setting": key, "reason": reason,
+        }))
+    return Router(providers)
 
 @app.post("/chat")
 async def chat(request: ChatRequest):
