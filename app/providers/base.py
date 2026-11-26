@@ -28,3 +28,8 @@ class Provider(ABC):
     The rest of the gateway only ever talks to this interface,
     so it never needs to know which real provider is underneath.
     """
+
+    @abstractmethod
+    async def chat(self, request: ChatRequest) -> ChatResponse:
+        """Send a chat request to the provider, return a normalized response."""
+        ...
