@@ -25,7 +25,7 @@ MODEL_MAP = {
 }
 
 # only fall back for actual provider errors, not bugs in my own code
-PROVIDER_ERRORS = (OpenAIAPIError, GeminiAPIError)
+PROVIDER_ERRORS = (OpenAIAPIError, GeminiAPIError, IncompleteResponseError)
 
 
 class Router:
