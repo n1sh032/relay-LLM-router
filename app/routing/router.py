@@ -1,3 +1,4 @@
+import asyncio
 import json
 import logging
 from openai import APIError as OpenAIAPIError
