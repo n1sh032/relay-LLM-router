@@ -22,10 +22,7 @@ class GeminiProvider(Provider):
         response = await self.client.aio.models.generate_content(
             model=request.model,
             contents=gemini_messages,
-            config={
-                "max_output_tokens": request.max_tokens,
-                "temperature": request.temperature,
-            },
+            config=config,
         )
 
         return ChatResponse(
