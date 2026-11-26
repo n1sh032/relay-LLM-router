@@ -13,3 +13,4 @@ def test_cleanup_continues_after_one_provider_fails():
     })
     asyncio.run(close_router(router))
     first.assert_awaited_once()
+    second.assert_awaited_once()
