@@ -11,8 +11,8 @@ class ChatMessage(BaseModel):
 
 class ChatRequest(BaseModel):
     messages: list[ChatMessage]
-    quality: str = "fast"   # "fast" or "smart" for now, keeping it simple
-    model: str | None = None   # gets filled in by the router, caller doesnt need to set this
+    quality: str = "fast"  # "fast" or "smart" for now
+    model: str | None = None  # router fills this in, dont need to set it yourself
     max_tokens: int | None = None
     temperature: float | None = None
 
