@@ -45,6 +45,8 @@ class Router:
                 print(f"{provider_name} failed: {e}")
                 last_error = e
                 continue
+            # anything NOT in PROVIDER_ERRORS (bugs, typos, etc)
+            # will crash normally instead of being hidden here
 
         # if we get here, literally nothing worked
         raise AllProvidersFailedError(f"all providers failed, last error: {last_error}")
