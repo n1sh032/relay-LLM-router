@@ -30,6 +30,7 @@ class ChatResponse(BaseModel):
 # base class / interface that every provider has to follow
 # using ABC here so python actually forces subclasses to implement chat()
 # instead of me forgetting and it just breaking randomly later
+
 class Provider(ABC):
     """
     Base contract every provider (OpenAI, Gemini, etc.) must follow.
