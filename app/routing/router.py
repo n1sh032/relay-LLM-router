@@ -40,7 +40,7 @@ class Router:
             provider = self.providers.get(provider_name)
             if provider is None:
                 continue
-            provider_request = request.model_copy(update={"model": model_name})
+            provider_request = ProviderRequest(**request.model_dump(), model=model_name)
 
             try:
                 return await provider.chat(provider_request)
