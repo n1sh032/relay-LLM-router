@@ -15,7 +15,6 @@ router = Router({
     "gemini": GeminiProvider(),
 })
 
-
 @app.post("/chat")
 async def chat(request: ChatRequest):
     return await router.chat(request)
