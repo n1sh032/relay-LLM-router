@@ -30,6 +30,6 @@ class GeminiProvider(Provider):
             content=response.text,
             provider="gemini",
             model=request.model,
-            input_tokens=usage.prompt_token_count,
-            output_tokens=usage.candidates_token_count,
+            input_tokens=response.usage_metadata.prompt_token_count,
+            output_tokens=response.usage_metadata.candidates_token_count,
         )
