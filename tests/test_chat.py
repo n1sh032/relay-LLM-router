@@ -16,3 +16,15 @@ def post(request):
             return await client.post("/chat", json=request)
 
     return asyncio.run(send())
+
+
+@pytest.mark.parametrize("change", [
+    {"messages": [{"role": "tool", "content": "x"}]},
+    {"messages": [{"role": "user", "content": "x" * 16001}]},
+    {"temperature": 3},
+    {"max_tokens": 0},
+    {"quality": "unknown"},
+])
+def test_invalid_request(change):
+    request = {"messages": [{"role": "user", "content": "hello"}]}
+    assert post(request | change).status_code == 422
