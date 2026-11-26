@@ -11,6 +11,15 @@ from app.routing.router import AllProvidersFailedError
 load_dotenv()
 router = configure_router()
 
+
+@asynccontextmanager
+async def lifespan(app):
+    try:
+        yield
+    finally:
+        await close_router(router)
+
+
 app.add_middleware(ChatBodyLimit)
 
 # openai first, gemini as backup if it fails
