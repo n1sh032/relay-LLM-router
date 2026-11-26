@@ -13,6 +13,9 @@ class GeminiProvider(Provider):
         gemini_messages = []
         config = {"max_output_tokens": request.max_tokens, "temperature": request.temperature}
         for m in request.messages:
+            if m.role == "system":
+                config["system_instruction"] = m.content
+                continue
             role = "model" if m.role == "assistant" else m.role
             gemini_messages.append({"role": role, "parts": [{"text": m.content}]})
 
