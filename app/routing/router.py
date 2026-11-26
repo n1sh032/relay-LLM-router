@@ -22,6 +22,7 @@ MODEL_MAP = {
 # anything else (like a bug in my own code) should crash loudly instead
 PROVIDER_ERRORS = (OpenAIAPIError, GeminiAPIError)
 
+
 class Router:
 
     def __init__(self, providers: dict[str, Provider]):
