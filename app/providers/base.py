@@ -32,11 +32,6 @@ class ChatResponse(BaseModel):
 # instead of me forgetting and it just breaking randomly later
 
 class Provider(ABC):
-    """
-    Base contract every provider (OpenAI, Gemini, etc.) must follow.
-    The rest of the gateway only ever talks to this interface,
-    so it never needs to know which real provider is underneath.
-    """
 
     @abstractmethod
     async def chat(self, request: ChatRequest) -> ChatResponse:
