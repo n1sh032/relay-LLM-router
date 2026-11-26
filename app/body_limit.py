@@ -13,3 +13,6 @@ class ChatBodyLimit:
         body = bytearray()
         while True:
             message = await receive()
+            if message["type"] == "http.disconnect":
+                return
+            chunk = message.get("body", b"")
