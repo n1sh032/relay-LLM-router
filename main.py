@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 
-from fastapi import FastAPI, HTTPException
+from app.application import close_router, configure_router
 from app.body_limit import ChatBodyLimit
 from app.providers.base import ChatRequest, ChatResponse
 from app.providers.openai_provider import OpenAIProvider
