@@ -29,7 +29,6 @@ async def health():
     return {"status": "ready" if router.providers else "unconfigured",
             "providers": sorted(router.providers)}
 
-router = configure_router()
 
 @app.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
