@@ -8,11 +8,8 @@ class OpenAIProvider(Provider):
         self.client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
     async def chat(self, request: ChatRequest) -> ChatResponse:
-        # openai wants messages as plain dicts, not our pydantic objects
-        # so gotta convert first
-        openai_messages = [
-            {"role": m.role, "content": m.content} for m in request.messages
-        ]
+        # openai wants plain dicts not pydantic objects
+        openai_messages = [{"role": m.role, "content": m.content} for m in request.messages]
 
         response = await self.client.chat.completions.create(
             model=request.model,
