@@ -22,3 +22,6 @@ class ChatBodyLimit:
             body.extend(chunk)
             if not message.get("more_body", False):
                 break
+
+        delivered = False
+
