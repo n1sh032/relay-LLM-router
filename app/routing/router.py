@@ -49,3 +49,6 @@ class Router:
                 # provider. will make this smarter later - some errors
                 # shouldnt even trigger a fallback (like a bad request)
                 print(f"{provider_name} failed: {e}")
+                last_error = e
+                continue
+
