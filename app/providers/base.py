@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
-from pydantic import BaseModel
+from typing import Literal
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 # these are the "shapes" my gateway uses internally
 # doesnt matter if its openai or gemini underneath, everything gets
