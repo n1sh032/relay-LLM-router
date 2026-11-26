@@ -30,4 +30,5 @@ class OpenAIProvider(Provider):
             model=getattr(response, "model", None) or request.model,
             input_tokens=getattr(usage, "prompt_tokens", None),
             output_tokens=getattr(usage, "completion_tokens", None),
+            finish_reason=getattr(choices[0], "finish_reason", None),
         )
