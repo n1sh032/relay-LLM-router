@@ -7,3 +7,6 @@ class ChatMessage(BaseModel):
     content: str
 
 
+class ChatRequest(BaseModel):
+    messages: list[ChatMessage]
+    model: str
