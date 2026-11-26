@@ -25,3 +25,11 @@ class OpenAIProvider(Provider):
 
         # now converting THEIR response shape back into OUR shape
         choice = response.choices[0]
+
+        return ChatResponse(
+            content=choice.message.content,
+            provider="openai",
+            model=response.model,
+            input_tokens=response.usage.prompt_tokens,
+            output_tokens=response.usage.completion_tokens,
+        )
