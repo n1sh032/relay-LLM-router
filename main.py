@@ -33,6 +33,8 @@ def configure_router():
         }))
     return Router(providers)
 
-@app.post("/chat")
+
+router = configure_router()
+
 async def chat(request: ChatRequest):
     return await router.chat(request)
