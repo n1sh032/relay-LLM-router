@@ -24,6 +24,8 @@ class ChatResponse(BaseModel):
     output_tokens: int
 
 class Provider(ABC):
+    # every provider (openai, gemini etc) has to implement this
+    # keeps everything consistent so the router doesnt care who its talking to
 
     @abstractmethod
     async def chat(self, request: ChatRequest) -> ChatResponse:
