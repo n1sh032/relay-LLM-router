@@ -10,3 +10,6 @@ app = FastAPI()
 
 # just hardcoding these for now, will build real routing later
 openai_provider = OpenAIProvider()
+gemini_provider = GeminiProvider()
+
+
