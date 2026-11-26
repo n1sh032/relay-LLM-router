@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from pydantic import BaseModel
 
 # these are the "shapes" my gateway uses internally
-# doesn't matter if its openai or gemini underneath, everything gets
+# doesnt matter if its openai or gemini underneath, everything gets
 # converted into these before it leaves the provider files
 
 class ChatMessage(BaseModel):
