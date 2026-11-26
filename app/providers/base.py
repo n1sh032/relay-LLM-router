@@ -6,7 +6,7 @@ from pydantic import BaseModel
 # converted into these before it leaves the provider files
 
 class ChatMessage(BaseModel):
-    role: str
+    role: str       # "user", "assistant" or "system"
     content: str
 
 
