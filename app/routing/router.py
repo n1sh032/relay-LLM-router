@@ -1,3 +1,5 @@
+from openai import APIError as OpenAIAPIError
+from google.genai.errors import APIError as GeminiAPIError
 from app.providers.base import Provider, ChatRequest, ChatResponse
 
 # just a rough list for now of which errors mean "try someone else"
