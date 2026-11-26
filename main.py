@@ -5,8 +5,8 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-from fastapi import FastAPI
-from app.providers.base import ChatRequest
+from fastapi import FastAPI, HTTPException
+from app.providers.base import ChatRequest, ChatResponse
 from app.providers.openai_provider import OpenAIProvider
 from app.providers.gemini_provider import GeminiProvider
 from app.routing.router import Router
