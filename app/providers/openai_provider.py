@@ -18,7 +18,6 @@ class OpenAIProvider(Provider):
             temperature=request.temperature,
         )
 
-        # now converting THEIR response shape back into OUR shape
         choice = response.choices[0]
 
         return ChatResponse(
