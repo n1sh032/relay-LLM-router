@@ -1,6 +1,6 @@
 import os
 from google import genai
-from app.providers.base import Provider, ChatRequest, ChatResponse, IncompleteResponseError
+from app.providers.base import Provider, ProviderRequest, ChatResponse, IncompleteResponseError
 
 
 class GeminiProvider(Provider):
