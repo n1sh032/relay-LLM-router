@@ -19,3 +19,6 @@ class ChatResponse(BaseModel):
     provider: str
     model: str
     input_tokens: int
+    output_tokens: int
+
+
