@@ -9,7 +9,6 @@ class ChatMessage(BaseModel):
     role: str       # "user", "assistant" or "system"
     content: str
 
-
 class ChatRequest(BaseModel):
     # this is what comes IN to my api
     messages: list[ChatMessage]
