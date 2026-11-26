@@ -20,6 +20,7 @@ async def lifespan(app):
         await close_router(router)
 
 
+app = FastAPI(title="Relay LLM Router", version="0.1.0", lifespan=lifespan)
 app.add_middleware(ChatBodyLimit)
 
 # openai first, gemini as backup if it fails
