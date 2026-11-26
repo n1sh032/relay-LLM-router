@@ -30,7 +30,7 @@ class GeminiProvider(Provider):
             raise IncompleteResponseError()
         usage = getattr(response, "usage_metadata", None)
         return ChatResponse(
-            content=response.text,
+            content=content,
             provider="gemini",
             model=request.model,
             input_tokens=response.usage_metadata.prompt_token_count,
