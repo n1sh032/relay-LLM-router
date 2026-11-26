@@ -16,3 +16,6 @@ class ChatRequest(BaseModel):
 
 class ChatResponse(BaseModel):
     content: str
+    provider: str
+    model: str
+    input_tokens: int
