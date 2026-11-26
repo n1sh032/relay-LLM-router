@@ -28,8 +28,6 @@ class ChatRequest(BaseModel):
             raise ValueError("at least one user message is required")
         if any(m.role == "system" for m in self.messages[1:]):
             raise ValueError("a system message is only allowed at the start")
-        if self.model is not None:
-            raise ValueError("choose a quality tier instead of specifying a model")
         return self
 
 class ChatResponse(BaseModel):
