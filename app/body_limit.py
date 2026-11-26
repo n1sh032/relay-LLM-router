@@ -31,3 +31,5 @@ class ChatBodyLimit:
                 return await receive()
             delivered = True
             return {"type": "http.request", "body": bytes(body), "more_body": False}
+
+        return await self.app(scope, replay, send)
