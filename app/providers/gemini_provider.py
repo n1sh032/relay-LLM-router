@@ -11,6 +11,7 @@ class GeminiProvider(Provider):
         # gemini uses "model" instead of "assistant" for role, annoying
         # spent way too long debugging this before i realised
         gemini_messages = []
+        config = {"max_output_tokens": request.max_tokens, "temperature": request.temperature}
         for m in request.messages:
             role = "model" if m.role == "assistant" else m.role
             gemini_messages.append({"role": role, "parts": [{"text": m.content}]})
