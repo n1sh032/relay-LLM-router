@@ -34,3 +34,9 @@ def test_fallback_and_errors(monkeypatch):
     class Empty:
         async def chat(self, request):
             raise IncompleteResponseError()
+
+    class Working:
+        async def chat(self, request):
+            return ChatResponse(content="hello", model=request.model, provider="gemini",
+                                input_tokens=None, output_tokens=None)
+
