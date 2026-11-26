@@ -7,8 +7,9 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 # converted into these before it leaves the provider files
 
 class ChatMessage(BaseModel):
-    role: str       # "user", "assistant" or "system"
-    content: str
+    model_config = ConfigDict(extra="forbid")
+    role: Literal["user", "assistant", "system"]
+    content: str = Field(min_length=1, max_length=16000)
 
 class ChatRequest(BaseModel):
     messages: list[ChatMessage]
