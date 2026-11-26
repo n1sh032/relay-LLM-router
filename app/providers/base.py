@@ -31,5 +31,5 @@ class Provider(ABC):
     async def chat(self, request: ChatRequest) -> ChatResponse:
         pass
 
-    # TODO: maybe add a health_check() method later so i can ping
-    # providers and see which ones are up before routing to them
+    # TODO: add health_check() later maybe, so i can ping providers
+    # before routing to them instead of just finding out when it fails
