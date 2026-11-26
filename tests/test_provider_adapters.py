@@ -46,3 +46,6 @@ def test_gemini_sends_system_message_separately():
     assert request_args["config"]["system_instruction"] == "Keep it brief."
     assert [message["role"] for message in request_args["contents"]] == ["user"]
 
+    generate.return_value = NS(text=None)
+    with pytest.raises(IncompleteResponseError):
+        asyncio.run(provider.chat(request()))
