@@ -11,6 +11,7 @@ class ChatMessage(BaseModel):
 
 
 class ChatRequest(BaseModel):
+    # this is what comes IN to my api
     messages: list[ChatMessage]
     model: str
     max_tokens: int | None = None
