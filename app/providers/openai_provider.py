@@ -18,7 +18,11 @@ class OpenAIProvider(Provider):
             temperature=request.temperature,
         )
 
-        choice = response.choices[0]
+        choices = getattr(response, "choices", None)
+        content = getattr(getattr(choices[0], "message", None), "content", None) if choices else None
+        if not isinstance(content, str) or not content.strip():
+            raise IncompleteResponseError()
+        usage = getattr(response, "usage", None)
         # putting their response back into my format
         return ChatResponse(
             content=choice.message.content,
