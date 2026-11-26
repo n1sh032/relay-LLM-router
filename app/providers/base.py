@@ -41,3 +41,4 @@ class Provider(ABC):
         pass
 
     # TODO: maybe add a health_check() method later so i can ping
+    # providers and see which ones are up before routing to them
