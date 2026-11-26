@@ -38,4 +38,9 @@ router = configure_router()
 
 @app.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
-    return await router.chat(request)
+    if not router.providers:
+        raise HTTPException(503, detail={"code": "no_providers_configured"})
+    try:
+        return await router.chat(request)
+    except AllProvidersFailedError:
+        raise HTTPException(502, detail={"code": "providers_failed"}) from None
