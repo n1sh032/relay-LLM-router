@@ -4,7 +4,6 @@ from app.providers.base import Provider, ChatRequest, ChatResponse
 
 
 class AllProvidersFailedError(Exception):
-    # raised when literally every provider in the list failed
     pass
 
 
