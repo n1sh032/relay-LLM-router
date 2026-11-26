@@ -30,6 +30,10 @@ class ChatRequest(BaseModel):
             raise ValueError("a system message is only allowed at the start")
         return self
 
+
+class ProviderRequest(ChatRequest):
+    model: str
+
 class ChatResponse(BaseModel):
     content: str
     provider: str  # so i can tell which one actually answered
