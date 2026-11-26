@@ -22,3 +22,6 @@ class OpenAIProvider(Provider):
             max_tokens=request.max_tokens,
             temperature=request.temperature,
         )
+
+        # now converting THEIR response shape back into OUR shape
+        choice = response.choices[0]
