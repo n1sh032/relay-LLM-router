@@ -7,7 +7,7 @@ class OpenAIProvider(Provider):
     def __init__(self):
         self.client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"), max_retries=0, timeout=30)
 
-    async def chat(self, request: ChatRequest) -> ChatResponse:
+    async def chat(self, request: ProviderRequest) -> ChatResponse:
         # openai wants plain dicts not pydantic objects
         openai_messages = [{"role": m.role, "content": m.content} for m in request.messages]
 
