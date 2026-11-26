@@ -7,6 +7,8 @@ class AllProvidersFailedError(Exception):
     pass
 
 
+# which provider + model to try for each quality level
+# ordered by preference, first one gets tried first
 MODEL_MAP = {
     "fast": [
         ("openai", "gpt-4o-mini"),
