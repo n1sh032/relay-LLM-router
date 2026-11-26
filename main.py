@@ -9,9 +9,11 @@ from app.routing.router import Router
 
 app = FastAPI()
 
-# just hardcoding these for now, will build real routing later
-openai_provider = OpenAIProvider()
-gemini_provider = GeminiProvider()
+# openai tried first for each quality tier, gemini as the fallback
+router = Router({
+    "openai": OpenAIProvider(),
+    "gemini": GeminiProvider(),
+})
 
 
 @app.post("/chat")
