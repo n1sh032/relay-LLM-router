@@ -25,6 +25,12 @@ class ChatRequest(BaseModel):
             raise ValueError("messages cannot be blank")
         if sum(len(m.content) for m in self.messages) > 64000:
             raise ValueError("combined message content cannot exceed 64000 characters")
+        if not any(m.role == "user" for m in self.messages):
+            raise ValueError("at least one user message is required")
+        if any(m.role == "system" for m in self.messages[1:]):
+            raise ValueError("a system message is only allowed at the start")
+        if self.model is not None:
+            raise ValueError("choose a quality tier instead of specifying a model")
 
 class ChatResponse(BaseModel):
     content: str
