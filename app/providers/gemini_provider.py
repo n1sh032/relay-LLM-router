@@ -14,7 +14,7 @@ class GeminiProvider(Provider):
         gemini_messages = []
         for m in request.messages:
             role = "model" if m.role == "assistant" else m.role
-            gemini_messages.append({"role": role, "parts": [m.content]})
+            gemini_messages.append({"role": role, "parts": [{"text": m.content}]})
 
         response = await model.generate_content_async(
             gemini_messages,
