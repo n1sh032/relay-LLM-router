@@ -18,7 +18,7 @@ class ChatRequest(BaseModel):
 
 class ChatResponse(BaseModel):
     content: str
-    provider: str      # so i can see in logs which one actually answered
+    provider: str  # so i can tell which one actually answered
     model: str
     input_tokens: int
     output_tokens: int
