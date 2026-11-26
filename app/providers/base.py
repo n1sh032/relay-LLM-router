@@ -35,5 +35,9 @@ class Provider(ABC):
 
     @abstractmethod
     async def chat(self, request: ChatRequest) -> ChatResponse:
-        """Send a chat request to the provider, return a normalized response."""
-        ...
+        # every provider needs to take my ChatRequest format
+        # and return my ChatResponse format, doesn't matter how
+        # they do it internally
+        pass
+
+    # TODO: maybe add a health_check() method later so i can ping
