@@ -6,9 +6,7 @@ from fastapi import FastAPI, HTTPException
 from app.application import close_router, configure_router
 from app.body_limit import ChatBodyLimit
 from app.providers.base import ChatRequest, ChatResponse
-from app.providers.openai_provider import OpenAIProvider
-from app.providers.gemini_provider import GeminiProvider
-from app.routing.router import AllProvidersFailedError, Router
+from app.routing.router import AllProvidersFailedError
 
 app = FastAPI()
 app.add_middleware(ChatBodyLimit)
