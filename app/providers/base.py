@@ -21,7 +21,7 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     # this is what goes OUT, no matter which provider handled it
     content: str
-    provider: str
+    provider: str      # so i can see in logs which one actually answered
     model: str
     input_tokens: int
     output_tokens: int
