@@ -40,3 +40,12 @@ class Router:
 
             # each provider gets told exactly which model to use for THIS
             # attempt instead of relying on whatever the caller sent
+            provider_request = request.model_copy(update={"model": model_name})
+
+            try:
+                return await provider.chat(provider_request)
+            except Exception as e:
+                # for now just catching everything and moving to the next
+                # provider. will make this smarter later - some errors
+                # shouldnt even trigger a fallback (like a bad request)
+                print(f"{provider_name} failed: {e}")
