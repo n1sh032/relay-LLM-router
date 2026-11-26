@@ -17,7 +17,6 @@ class ChatRequest(BaseModel):
     temperature: float | None = None
 
 class ChatResponse(BaseModel):
-    # this is what goes OUT, no matter which provider handled it
     content: str
     provider: str      # so i can see in logs which one actually answered
     model: str
