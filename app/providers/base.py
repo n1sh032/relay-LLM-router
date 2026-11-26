@@ -10,7 +10,6 @@ class ChatMessage(BaseModel):
     content: str
 
 class ChatRequest(BaseModel):
-    # this is what comes IN to my api
     messages: list[ChatMessage]
     quality: str = "fast"   # "fast" or "smart" for now, keeping it simple
     model: str | None = None   # gets filled in by the router, caller doesnt need to set this
