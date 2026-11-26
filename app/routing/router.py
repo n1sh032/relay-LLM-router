@@ -44,9 +44,11 @@ class Router:
             try:
                 return await provider.chat(provider_request)
             except PROVIDER_ERRORS as e:
-                print(f"{provider_name} failed: {e}")
-                last_error = e
-                continue
+                logger.warning(json.dumps({
+                    "event": "provider_failed", "provider": provider_name,
+                    "model": model_name, "error_type": type(e).__name__,
+                    "status": getattr(e, "status_code", getattr(e, "code", None)),
+                }))
             # anything else isnt caught here on purpose, i want real bugs to crash
 
         raise AllProvidersFailedError(f"all providers failed. last error: {last_error}")
