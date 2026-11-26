@@ -16,3 +16,6 @@ class ChatBodyLimit:
             if message["type"] == "http.disconnect":
                 return
             chunk = message.get("body", b"")
+            if len(body) + len(chunk) > self.max_bytes:
+                response = JSONResponse({"detail": {"code": "request_too_large"}}, status_code=413)
+                return await response(scope, receive, send)
