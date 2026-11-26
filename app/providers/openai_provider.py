@@ -27,7 +27,7 @@ class OpenAIProvider(Provider):
         return ChatResponse(
             content=content,
             provider="openai",
-            model=response.model,
-            input_tokens=response.usage.prompt_tokens,
-            output_tokens=response.usage.completion_tokens,
+            model=getattr(response, "model", None) or request.model,
+            input_tokens=getattr(usage, "prompt_tokens", None),
+            output_tokens=getattr(usage, "completion_tokens", None),
         )
