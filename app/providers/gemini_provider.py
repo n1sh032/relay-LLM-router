@@ -5,7 +5,9 @@ from app.providers.base import Provider, ProviderRequest, ChatResponse, Incomple
 
 class GeminiProvider(Provider):
     def __init__(self):
-        self.client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+        self.client = genai.Client(
+            api_key=os.getenv("GEMINI_API_KEY"), http_options={"timeout": 30000},
+        )
 
     async def chat(self, request: ChatRequest) -> ChatResponse:
         # gemini uses "model" instead of "assistant" for role, annoying
