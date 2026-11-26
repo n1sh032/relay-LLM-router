@@ -16,9 +16,10 @@ class GeminiProvider(Provider):
             role = "model" if m.role == "assistant" else m.role
             gemini_messages.append({"role": role, "parts": [{"text": m.content}]})
 
-        response = await model.generate_content_async(
-            gemini_messages,
-            generation_config={
+        response = await client.aio.models.generate_content(
+            model=request.model,
+            contents=gemini_messages,
+            config={
                 "max_output_tokens": request.max_tokens,
                 "temperature": request.temperature,
             },
