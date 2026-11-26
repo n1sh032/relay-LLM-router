@@ -49,3 +49,4 @@ def test_fallback_and_errors(monkeypatch):
         monkeypatch.setattr(main, "router", Router(providers))
         response = post(request)
         assert response.status_code == status
+    assert response.json()["provider"] == "gemini"
