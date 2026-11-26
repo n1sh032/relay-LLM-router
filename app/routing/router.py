@@ -37,3 +37,6 @@ class Router:
 
         for provider_name, model_name in options:
             provider = self.providers[provider_name]
+
+            # each provider gets told exactly which model to use for THIS
+            # attempt instead of relying on whatever the caller sent
