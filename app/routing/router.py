@@ -39,8 +39,6 @@ class Router:
             try:
                 return await provider.chat(provider_request)
             except PROVIDER_ERRORS as e:
-                # actual provider failure - openai/gemini rejected us,
-                # network issue, etc - fine to fall back
                 print(f"{provider_name} failed: {e}")
                 last_error = e
                 continue
