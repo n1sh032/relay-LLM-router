@@ -8,7 +8,9 @@ from app.body_limit import ChatBodyLimit
 from app.providers.base import ChatRequest, ChatResponse
 from app.routing.router import AllProvidersFailedError
 
-app = FastAPI()
+load_dotenv()
+router = configure_router()
+
 app.add_middleware(ChatBodyLimit)
 
 # openai first, gemini as backup if it fails
