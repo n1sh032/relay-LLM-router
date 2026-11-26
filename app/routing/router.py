@@ -20,8 +20,7 @@ MODEL_MAP = {
     ],
 }
 
-# only these count as "provider failed, try the next one"
-# anything else (like a bug in my own code) should crash loudly instead
+# only fall back for actual provider errors, not bugs in my own code
 PROVIDER_ERRORS = (OpenAIAPIError, GeminiAPIError)
 
 
