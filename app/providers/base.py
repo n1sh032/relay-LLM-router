@@ -13,3 +13,6 @@ class ChatRequest(BaseModel):
     max_tokens: int | None = None
     temperature: float | None = None
 
+
+class ChatResponse(BaseModel):
+    content: str
