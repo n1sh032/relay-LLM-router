@@ -13,6 +13,7 @@ from app.providers.gemini_provider import GeminiProvider
 from app.routing.router import AllProvidersFailedError, Router
 
 app = FastAPI()
+app.add_middleware(ChatBodyLimit)
 
 # openai first, gemini as backup if it fails
 def configure_router():
