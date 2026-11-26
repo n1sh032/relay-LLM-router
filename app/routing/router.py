@@ -36,7 +36,9 @@ class Router:
         options = MODEL_MAP.get(request.quality, MODEL_MAP["fast"])
 
         for provider_name, model_name in options:
-            provider = self.providers[provider_name]
+            provider = self.providers.get(provider_name)
+            if provider is None:
+                continue
             provider_request = request.model_copy(update={"model": model_name})
 
             try:
