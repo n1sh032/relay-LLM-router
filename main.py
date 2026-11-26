@@ -36,5 +36,6 @@ def configure_router():
 
 router = configure_router()
 
+@app.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
     return await router.chat(request)
