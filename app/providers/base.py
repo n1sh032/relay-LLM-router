@@ -16,7 +16,6 @@ class ChatRequest(BaseModel):
     max_tokens: int | None = None
     temperature: float | None = None
 
-
 class ChatResponse(BaseModel):
     # this is what goes OUT, no matter which provider handled it
     content: str
