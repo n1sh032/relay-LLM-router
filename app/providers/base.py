@@ -19,6 +19,12 @@ class ChatRequest(BaseModel):
     max_tokens: int | None = Field(None, ge=1, le=8192, strict=True)
     temperature: float | None = Field(None, ge=0, le=2, strict=True)
 
+    @model_validator(mode="after")
+    def validate_messages(self):
+        if any(not m.content.strip() for m in self.messages):
+            raise ValueError("messages cannot be blank")
+        if sum(len(m.content) for m in self.messages) > 64000:
+            raise ValueError("combined message content cannot exceed 64000 characters")
 
 class ChatResponse(BaseModel):
     content: str
