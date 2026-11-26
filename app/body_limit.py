@@ -10,3 +10,6 @@ class ChatBodyLimit:
         if scope["type"] != "http" or scope["method"] != "POST" or scope["path"] != "/chat":
             return await self.app(scope, receive, send)
 
+        body = bytearray()
+        while True:
+            message = await receive()
