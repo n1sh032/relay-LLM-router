@@ -9,9 +9,8 @@ client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 class GeminiProvider(Provider):
 
     async def chat(self, request: ChatRequest) -> ChatResponse:
-        model = genai.GenerativeModel(request.model)
-
-        # gemini doesnt use "assistant" as a role, it wants "model" instead
+        # gemini doesnt use "assistant" as a role like openai does
+        # it wants "model" instead, learned this the hard way earlier
         # so gotta remap that or it just errors out (learned this the hard way)
         gemini_messages = []
         for m in request.messages:
