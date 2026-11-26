@@ -40,3 +40,6 @@ def test_gemini_sends_system_message_separately():
     provider = GeminiProvider.__new__(GeminiProvider)
     provider.client = NS(aio=NS(models=NS(generate_content=generate)))
     response = asyncio.run(provider.chat(request()))
+    assert response.finish_reason == "MAX_TOKENS"
+    assert response.output_tokens is None
+    request_args = generate.call_args.kwargs
