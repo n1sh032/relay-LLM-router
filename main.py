@@ -23,25 +23,6 @@ async def lifespan(app):
 app = FastAPI(title="Relay LLM Router", version="0.1.0", lifespan=lifespan)
 app.add_middleware(ChatBodyLimit)
 
-# openai first, gemini as backup if it fails
-def configure_router():
-    providers = {}
-    for name, key, factory in (
-        ("openai", "OPENAI_API_KEY", OpenAIProvider),
-        ("gemini", "GEMINI_API_KEY", GeminiProvider),
-    ):
-        reason = "missing_api_key"
-        if os.getenv(key, "").strip():
-            try:
-                providers[name] = factory()
-                continue
-            except Exception as exc:
-                reason = type(exc).__name__
-        logging.getLogger(__name__).warning(json.dumps({
-            "event": "provider_unavailable", "provider": name,
-            "setting": key, "reason": reason,
-        }))
-    return Router(providers)
 
 
 router = configure_router()
