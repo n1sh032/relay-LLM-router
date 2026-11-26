@@ -19,3 +19,9 @@ def request():
     )
 
 
+def test_openai_preserves_length_finish_reason_and_missing_usage():
+    create = AsyncMock(return_value=NS(choices=[
+        NS(message=NS(content="Partial reply"), finish_reason="length"),
+    ]))
+    provider = OpenAIProvider.__new__(OpenAIProvider)
+    provider.client = NS(chat=NS(completions=NS(create=create)))
