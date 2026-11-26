@@ -1,3 +1,5 @@
+import json
+import logging
 from openai import APIError as OpenAIAPIError
 from google.genai.errors import APIError as GeminiAPIError
 from app.providers.base import Provider, ChatRequest, ChatResponse
