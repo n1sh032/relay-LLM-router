@@ -40,6 +40,7 @@ class ChatResponse(BaseModel):
     model: str
     input_tokens: int | None
     output_tokens: int | None
+    finish_reason: str | None = None
 
 
 class IncompleteResponseError(Exception):
