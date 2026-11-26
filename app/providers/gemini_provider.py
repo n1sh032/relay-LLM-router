@@ -23,7 +23,6 @@ class GeminiProvider(Provider):
             },
         )
 
-        # plating gemini's response onto our standard shape
         return ChatResponse(
             content=response.text,
             provider="gemini",
