@@ -19,7 +19,7 @@ class GeminiProvider(Provider):
             role = "model" if m.role == "assistant" else m.role
             gemini_messages.append({"role": role, "parts": [{"text": m.content}]})
 
-        response = await client.aio.models.generate_content(
+        response = await self.client.aio.models.generate_content(
             model=request.model,
             contents=gemini_messages,
             config={
