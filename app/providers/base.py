@@ -37,8 +37,9 @@ class ChatResponse(BaseModel):
     content: str
     provider: str  # so i can tell which one actually answered
     model: str
-    input_tokens: int
-    output_tokens: int
+    input_tokens: int | None
+    output_tokens: int | None
+
 
 class Provider(ABC):
     # every provider (openai, gemini etc) has to implement this
