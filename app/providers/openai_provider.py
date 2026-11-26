@@ -5,7 +5,7 @@ from app.providers.base import Provider, ChatRequest, ChatResponse, IncompleteRe
 
 class OpenAIProvider(Provider):
     def __init__(self):
-        self.client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        self.client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"), max_retries=0)
 
     async def chat(self, request: ChatRequest) -> ChatResponse:
         # openai wants plain dicts not pydantic objects
