@@ -38,4 +38,5 @@ class GeminiProvider(Provider):
             model=request.model,
             input_tokens=getattr(usage, "prompt_token_count", None),
             output_tokens=getattr(usage, "candidates_token_count", None),
+            finish_reason=getattr(candidates[0], "finish_reason", None) if candidates else None,
         )
