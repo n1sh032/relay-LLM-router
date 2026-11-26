@@ -51,7 +51,7 @@ class Provider(ABC):
     # keeps everything consistent so the router doesnt care who its talking to
 
     @abstractmethod
-    async def chat(self, request: ChatRequest) -> ChatResponse:
+    async def chat(self, request: ProviderRequest) -> ChatResponse:
         pass
 
     # TODO: add health_check() later maybe, so i can ping providers
