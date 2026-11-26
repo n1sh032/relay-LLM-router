@@ -25,7 +25,6 @@ PROVIDER_ERRORS = (OpenAIAPIError, GeminiAPIError)
 
 
 class Router:
-
     def __init__(self, providers: dict[str, Provider]):
         self.providers = providers
 
