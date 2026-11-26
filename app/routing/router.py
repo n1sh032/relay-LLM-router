@@ -26,7 +26,6 @@ PROVIDER_ERRORS = (OpenAIAPIError, GeminiAPIError)
 class Router:
 
     def __init__(self, providers: dict[str, Provider]):
-        # dict this time so i can look up "openai" -> its provider object
         self.providers = providers
 
     async def chat(self, request: ChatRequest) -> ChatResponse:
