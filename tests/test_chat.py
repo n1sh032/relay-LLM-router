@@ -40,3 +40,12 @@ def test_fallback_and_errors(monkeypatch):
             return ChatResponse(content="hello", model=request.model, provider="gemini",
                                 input_tokens=None, output_tokens=None)
 
+    request = {"messages": [{"role": "user", "content": "hello"}]}
+    for providers, status in [
+        ({}, 503),
+        ({"openai": Empty()}, 502),
+        ({"openai": Empty(), "gemini": Working()}, 200),
+    ]:
+        monkeypatch.setattr(main, "router", Router(providers))
+        response = post(request)
+        assert response.status_code == status
