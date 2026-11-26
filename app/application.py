@@ -28,3 +28,10 @@ def configure_router():
         }))
     return Router(providers)
 
+
+async def close_router(router):
+    for name, provider in router.providers.items():
+        try:
+            await provider.close()
+        except Exception:
+            logger.exception("Provider cleanup failed", extra={"provider": name})
