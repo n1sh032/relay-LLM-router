@@ -25,3 +25,6 @@ def test_openai_preserves_length_finish_reason_and_missing_usage():
     ]))
     provider = OpenAIProvider.__new__(OpenAIProvider)
     provider.client = NS(chat=NS(completions=NS(create=create)))
+    response = asyncio.run(provider.chat(request()))
+    assert response.finish_reason == "length"
+    assert response.input_tokens is None
