@@ -42,7 +42,6 @@ class Router:
             except PROVIDER_ERRORS as e:
                 # actual provider failure - openai/gemini rejected us,
                 # network issue, etc - fine to fall back
-                # shouldnt even trigger a fallback (like a bad request)
                 print(f"{provider_name} failed: {e}")
                 last_error = e
                 continue
