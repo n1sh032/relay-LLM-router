@@ -52,3 +52,5 @@ class Router:
                 last_error = e
                 continue
 
+        # if we get here, literally nothing worked
+        raise AllProvidersFailedError(f"all providers failed, last error: {last_error}")
