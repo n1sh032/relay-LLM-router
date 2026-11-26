@@ -28,3 +28,6 @@ def test_openai_preserves_length_finish_reason_and_missing_usage():
     response = asyncio.run(provider.chat(request()))
     assert response.finish_reason == "length"
     assert response.input_tokens is None
+    assert response.model == "test-model"
+
+    create.return_value = NS(choices=[])
