@@ -23,8 +23,6 @@ class ChatResponse(BaseModel):
     input_tokens: int
     output_tokens: int
 
-# instead of me forgetting and it just breaking randomly later
-
 class Provider(ABC):
 
     @abstractmethod
