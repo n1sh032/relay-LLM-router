@@ -28,6 +28,7 @@ class GeminiProvider(Provider):
         content = getattr(response, "text", None)
         if not isinstance(content, str) or not content.strip():
             raise IncompleteResponseError()
+        usage = getattr(response, "usage_metadata", None)
         return ChatResponse(
             content=response.text,
             provider="gemini",
