@@ -11,7 +11,6 @@ class GeminiProvider(Provider):
     async def chat(self, request: ChatRequest) -> ChatResponse:
         # gemini doesnt use "assistant" as a role like openai does
         # it wants "model" instead, learned this the hard way earlier
-        # so gotta remap that or it just errors out (learned this the hard way)
         gemini_messages = []
         for m in request.messages:
             role = "model" if m.role == "assistant" else m.role
