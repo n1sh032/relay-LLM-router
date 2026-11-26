@@ -24,6 +24,10 @@ app = FastAPI(title="Relay LLM Router", version="0.1.0", lifespan=lifespan)
 app.add_middleware(ChatBodyLimit)
 
 
+@app.get("/health")
+async def health():
+    return {"status": "ready" if router.providers else "unconfigured",
+            "providers": sorted(router.providers)}
 
 router = configure_router()
 
