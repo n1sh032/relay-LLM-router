@@ -25,9 +25,7 @@ class GeminiProvider(Provider):
             },
         )
 
-        # gemini gives token counts in a different spot than openai does
-        usage = response.usage_metadata
-
+        # plating gemini's response onto our standard shape
         return ChatResponse(
             content=response.text,
             provider="gemini",
