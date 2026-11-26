@@ -10,3 +10,6 @@ class ChatMessage(BaseModel):
 class ChatRequest(BaseModel):
     messages: list[ChatMessage]
     model: str
+    max_tokens: int | None = None
+    temperature: float | None = None
+
