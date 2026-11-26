@@ -28,3 +28,9 @@ def post(request):
 def test_invalid_request(change):
     request = {"messages": [{"role": "user", "content": "hello"}]}
     assert post(request | change).status_code == 422
+
+
+def test_fallback_and_errors(monkeypatch):
+    class Empty:
+        async def chat(self, request):
+            raise IncompleteResponseError()
