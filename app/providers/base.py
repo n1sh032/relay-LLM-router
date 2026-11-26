@@ -16,8 +16,9 @@ class ChatRequest(BaseModel):
     messages: list[ChatMessage] = Field(min_length=1, max_length=64)
     quality: Literal["fast", "smart"] = "fast"
     model: str | None = None  # router fills this in, dont need to set it yourself
-    max_tokens: int | None = None
-    temperature: float | None = None
+    max_tokens: int | None = Field(None, ge=1, le=8192, strict=True)
+    temperature: float | None = Field(None, ge=0, le=2, strict=True)
+
 
 class ChatResponse(BaseModel):
     content: str
