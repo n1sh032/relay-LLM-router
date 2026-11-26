@@ -10,3 +10,15 @@ class AllProvidersFailedError(Exception):
 
 
 # maps a quality level to (which provider to try first, which model to use)
+# ordered by preference - first one in each list is tried first
+
+MODEL_MAP = {
+    "fast": [
+        ("openai", "gpt-4o-mini"),
+        ("gemini", "gemini-2.5-flash"),
+    ],
+    "smart": [
+        ("openai", "gpt-4o"),
+        ("gemini", "gemini-2.5-pro"),
+    ],
+}
