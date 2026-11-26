@@ -18,10 +18,4 @@ router = Router({
 
 @app.post("/chat")
 async def chat(request: ChatRequest):
-    # super basic for now - if model name has "gemini" in it use gemini,
-    # otherwise just default to openai. will replace this with real
-    # routing logic later
-    if "gemini" in request.model.lower():
-        return await gemini_provider.chat(request)
-    else:
-        return await openai_provider.chat(request)
+    return await router.chat(request)
