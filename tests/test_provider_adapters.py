@@ -43,3 +43,6 @@ def test_gemini_sends_system_message_separately():
     assert response.finish_reason == "MAX_TOKENS"
     assert response.output_tokens is None
     request_args = generate.call_args.kwargs
+    assert request_args["config"]["system_instruction"] == "Keep it brief."
+    assert [message["role"] for message in request_args["contents"]] == ["user"]
+
