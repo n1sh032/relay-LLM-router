@@ -34,3 +34,6 @@ class Router:
         options = MODEL_MAP.get(request.quality, MODEL_MAP["fast"])
 
         last_error = None
+
+        for provider_name, model_name in options:
+            provider = self.providers[provider_name]
