@@ -2,7 +2,6 @@ import os
 from google import genai
 from app.providers.base import Provider, ChatRequest, ChatResponse
 
-# new sdk uses a client object instead of the old configure() global setup
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 
