@@ -19,7 +19,7 @@ class OpenAIProvider(Provider):
         )
 
         choice = response.choices[0]
-
+        # putting their response back into my format
         return ChatResponse(
             content=choice.message.content,
             provider="openai",
